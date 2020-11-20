@@ -6,19 +6,17 @@ for (i = 0; i < parentChildInformation.length; i++) {
   }
 }
 
-const printChild = (indParent) => {
-  for (i = 0; i < parentChildInformation.length; i++) {
-    if (indParent == parentChildInformation[i].parent_id) {
-      placeToPrint.innerHTML += parentChildInformation[i].name;
+const getInformation = (ind) => {
+  if (ind < parentArr.length) {
+    placeToPrint.innerHTML += parentArr[ind];
+    for (j = 0; j < parentChildInformation.length; j++) {
+      if (ind + 1 == parentChildInformation[j].parent_id) {
+        placeToPrint.innerHTML += parentChildInformation[j].name;
+      }
     }
+    ind++;
+    getInformation(ind);
   }
 };
 
-const getInformation = () => {
-  for (j = 0; j < parentArr.length; j++) {
-    placeToPrint.innerHTML += parentArr[j];
-    printChild(j + 1);
-  }
-};
-
-getInformation();
+getInformation(0);

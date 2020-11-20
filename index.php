@@ -19,29 +19,29 @@ require_once('connectDB.php');
         $arrayWithTableInformation[] = $row;
     }
     ?>
-    
+
     <!-- php logic for showing the names  -->
     <?php
     $parentArr = array();
     foreach ($GLOBALS["arrayWithTableInformation"] as $result) {
-        if($result['parent_id']==0) array_push($parentArr, $result['name']);
+        if ($result['parent_id'] == 0) array_push($parentArr, $result['name']);
     }
 
-    function printChild($indParent){
-        for($i=0;$i<count($GLOBALS["arrayWithTableInformation"]);$i++){
-            if($indParent==$GLOBALS["arrayWithTableInformation"][$i]['parent_id']){
-                print_r($GLOBALS["arrayWithTableInformation"][$i]['name']);
+    function getInformation($ind)
+    {
+        if ($ind < count($GLOBALS["parentArr"])) {
+            print_r($GLOBALS['parentArr'][$ind]);
+            for ($i = 0; $i < count($GLOBALS["arrayWithTableInformation"]); $i++) {
+                if ($ind+1 == $GLOBALS["arrayWithTableInformation"][$i]['parent_id']) {
+                    print_r($GLOBALS["arrayWithTableInformation"][$i]['name']);
+                }
             }
+            $ind++;
+            getInformation($ind);
         }
+        
     }
-
-    function getInformation(){
-        for($i=1;$i<=count($GLOBALS['parentArr']);$i++){
-            print_r($GLOBALS['parentArr'][$i-1]);
-            printChild($i);
-        }
-    }
-    getInformation();
+    getInformation(0);
     ?>
 
     <!-- javascript logic for showing the names -->
@@ -49,8 +49,6 @@ require_once('connectDB.php');
         var parentChildInformation = <?php echo json_encode($arrayWithTableInformation, JSON_UNESCAPED_UNICODE); ?>;
     </script>
     <!-- <script src="main.js" defer></script> -->
-
-
 
     <div class="content">
         <p id="root"></p>
