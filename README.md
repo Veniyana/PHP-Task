@@ -9,7 +9,7 @@ main.js - another solution but with JavaScript
 
 There are two ways to see the output of the task given.
 1. PHP based (automatically)
-2. JavaScript based (you need to uncomment line 69 in index.php)
+2. JavaScript based (you need to uncomment line 51 in index.php)
 
 
 For installation:

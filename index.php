@@ -19,48 +19,30 @@ require_once('connectDB.php');
         $arrayWithTableInformation[] = $row;
     }
     ?>
-
+    
     <!-- php logic for showing the names  -->
     <?php
     $parentArr = array();
     foreach ($GLOBALS["arrayWithTableInformation"] as $result) {
-        array_push($parentArr, $result['parent_id']);
+        if($result['parent_id']==0) array_push($parentArr, $result['name']);
     }
 
-    $childArr = array();
-    foreach ($GLOBALS["arrayWithTableInformation"] as $result) {
-        array_push($childArr, $result['name']);
-    }
-
-    function getUniqueArray($arr)
-    {
-        return array_unique($arr);;
-    };
-
-    function printChild($parentId)
-    {
-        echo "Child from parent_id: ";
-        print_r($parentId);
-        echo "<br>";
-        for ($i = 0; $i < count($GLOBALS['parentArr']); $i++) {
-            if ($parentId == $GLOBALS['parentArr'][$i]) {
-                print_r($GLOBALS['childArr'][$i]);
-                echo "<br>";
+    function printChild($indParent){
+        for($i=0;$i<count($GLOBALS["arrayWithTableInformation"]);$i++){
+            if($indParent==$GLOBALS["arrayWithTableInformation"][$i]['parent_id']){
+                print_r($GLOBALS["arrayWithTableInformation"][$i]['name']);
             }
         }
     }
 
-    function getInformation()
-    {
-        $uniqueParentArr = getUniqueArray($GLOBALS["parentArr"]);
-        for ($i = 0; $i < count($uniqueParentArr); $i++) {
-            printChild($uniqueParentArr[$i * 2]);
-            echo "<br>";
+    function getInformation(){
+        for($i=1;$i<=count($GLOBALS['parentArr']);$i++){
+            print_r($GLOBALS['parentArr'][$i-1]);
+            printChild($i);
         }
     }
     getInformation();
     ?>
-
 
     <!-- javascript logic for showing the names -->
     <script type="text/javascript">

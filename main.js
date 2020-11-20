@@ -1,29 +1,24 @@
-placeToPrint=document.getElementById("root");
-const getUniqueArray = arr => {
-    return [...new Set(arr)];
+placeToPrint = document.getElementById("root");
+parentArr = [];
+for (i = 0; i < parentChildInformation.length; i++) {
+  if (parentChildInformation[i].parent_id == 0) {
+    parentArr += parentChildInformation[i].name;
+  }
+}
+
+const printChild = (indParent) => {
+  for (i = 0; i < parentChildInformation.length; i++) {
+    if (indParent == parentChildInformation[i].parent_id) {
+      placeToPrint.innerHTML += parentChildInformation[i].name;
+    }
+  }
 };
 
-const printChild=(parentId,informationArr)=>{
-    placeToPrint.innerHTML+="Child from parent_id: "+parentId+"<br>";
-    for(j=0;j<informationArr.length;j++){
-        if(parentId==informationArr[j].parent_id){
-            placeToPrint.innerHTML+=informationArr[j].name+"<br>";
-        }
-    }
-}
-
-const getInformation=()=>{
-    tmpParentArr=0;
-
-    for(i=0;i<parentChildInformation.length;i++){
-        tmpParentArr+=parentChildInformation[i].parent_id;
-    }
-
-    uniqueParents=getUniqueArray(tmpParentArr);
-
-    for(i=0;i<uniqueParents.length;i++){
-        printChild(uniqueParents[i],parentChildInformation);
-    }
-}
+const getInformation = () => {
+  for (j = 0; j < parentArr.length; j++) {
+    placeToPrint.innerHTML += parentArr[j];
+    printChild(j + 1);
+  }
+};
 
 getInformation();
